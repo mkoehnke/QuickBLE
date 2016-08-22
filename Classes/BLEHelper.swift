@@ -4,6 +4,7 @@
 // - commands are added to a queue
 // - added characteristic propertie to write function
 
+
 import CoreBluetooth
 
 protocol BLEHelperDelegate: class {
