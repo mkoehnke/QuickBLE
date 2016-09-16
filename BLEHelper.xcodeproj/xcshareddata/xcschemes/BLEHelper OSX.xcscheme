@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BF986EE71D6B8E9000CF7A14"
-               BuildableName = "BLEHelper OSX.framework"
+               BuildableName = "BLEHelper.framework"
                BlueprintName = "BLEHelper OSX"
                ReferencedContainer = "container:BLEHelper.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BF986EE71D6B8E9000CF7A14"
-            BuildableName = "BLEHelper OSX.framework"
+            BuildableName = "BLEHelper.framework"
             BlueprintName = "BLEHelper OSX"
             ReferencedContainer = "container:BLEHelper.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BF986EE71D6B8E9000CF7A14"
-            BuildableName = "BLEHelper OSX.framework"
+            BuildableName = "BLEHelper.framework"
             BlueprintName = "BLEHelper OSX"
             ReferencedContainer = "container:BLEHelper.xcodeproj">
          </BuildableReference>

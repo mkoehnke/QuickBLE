@@ -1,5 +1,5 @@
 //
-// NSData+Int8.swift
+// ViewController.swift
 //
 // Copyright (c) 2016 Mathias Koehnke (http://www.mathiaskoehnke.de)
 //
@@ -21,22 +21,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import UIKit
+import BLEHelper
 
-// Modified Version of https://github.com/nebs/hello-bluetooth (SimpleBluetoothIO)
+class ViewController: UIViewController {
 
-import Foundation
-
-extension Data {
-
-    static func dataWithValue<T>(_ value: T) -> Data {
-        var variableValue : T = value
-        return Data(bytes: UnsafeMutablePointer(&variableValue), count: MemoryLayout<T>.size)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        let helper = BLEHelper(serviceUUID: "serviceUUID", delegate: self)
     }
+}
 
-    func int8Value() -> Int8 {
-        var value: UInt8 = 0
-        copyBytes(to: &value, count: MemoryLayout<UInt8>.size)
-        return Int8(value)
+extension ViewController : BLEHelperDelegate {
+    func helper(_ BLEHelper: BLEHelper, didReceiveValue value: Int8) {
+        
     }
-
 }

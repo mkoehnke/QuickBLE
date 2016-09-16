@@ -1,0 +1,21 @@
+source 'https://github.com/CocoaPods/Specs.git'
+install! 'cocoapods', :deterministic_uuids => false
+inhibit_all_warnings!
+use_frameworks!
+
+def import_pods
+    pod 'BLEHelper', :path => '../'
+end
+
+target 'Example' do
+	platform :ios, '9.1'
+	import_pods
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+          config.build_settings['SWIFT_VERSION'] = '3.0'
+      end
+  end
+end

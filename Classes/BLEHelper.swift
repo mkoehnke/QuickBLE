@@ -1,5 +1,28 @@
-// Modified Version of https://github.com/nebs/hello-bluetooth (SimpleBluetoothIO)
+//
+// BLEHelper.swift
+//
+// Copyright (c) 2016 Mathias Koehnke (http://www.mathiaskoehnke.de)
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
+
+// Modified Version of https://github.com/nebs/hello-bluetooth (SimpleBluetoothIO)
 // - added read function
 // - commands are added to a queue
 // - added characteristic propertie to write function
@@ -7,12 +30,12 @@
 
 import CoreBluetooth
 
-protocol BLEHelperDelegate: class {
+public protocol BLEHelperDelegate: class {
     func helper(_ BLEHelper: BLEHelper, didReceiveValue value: Int8)
 }
 
-class BLEHelper: NSObject {
-    let serviceUUID: String
+public class BLEHelper: NSObject {
+    private(set) var serviceUUID: String = "de.mathiaskoehnke.BLEHelper"
     weak var delegate: BLEHelperDelegate?
 
     internal var centralManager: CBCentralManager!
@@ -29,7 +52,7 @@ class BLEHelper: NSObject {
         return queue
     }()
     
-    init(serviceUUID: String, delegate: BLEHelperDelegate?) {
+    public init(serviceUUID: String, delegate: BLEHelperDelegate?) {
         self.serviceUUID = serviceUUID
         self.delegate = delegate
 
@@ -37,6 +60,8 @@ class BLEHelper: NSObject {
 
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
+    
+    private override init() {}
 
     func write(value: Int8, for uuid: String) {
         operationQueue.addOperation { [weak self] in
@@ -72,11 +97,11 @@ class BLEHelper: NSObject {
 }
 
 extension BLEHelper: CBCentralManagerDelegate {
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+    public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheral.discoverServices(nil)
     }
 
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         connectedPeripheral = peripheral
 
         if let connectedPeripheral = connectedPeripheral {
@@ -86,13 +111,13 @@ extension BLEHelper: CBCentralManagerDelegate {
         centralManager.stopScan()
     }
 
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+    public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
             startScan()
         }
     }
     
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+    public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         startScan()
     }
     
@@ -103,7 +128,7 @@ extension BLEHelper: CBCentralManagerDelegate {
 }
 
 extension BLEHelper: CBPeripheralDelegate {
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else {
             return
         }
@@ -115,7 +140,7 @@ extension BLEHelper: CBPeripheralDelegate {
         }
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else {
             return
         }
@@ -130,7 +155,7 @@ extension BLEHelper: CBPeripheralDelegate {
         operationQueue.isSuspended = false
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard let data = characteristic.value, let delegate = delegate else {
             return
         }
@@ -144,7 +169,7 @@ extension BLEHelper: CBPeripheralDelegate {
         }
     }
     
-    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             print("Error writing value for peripheral \(peripheral.name): \(error.localizedDescription)")
             return
