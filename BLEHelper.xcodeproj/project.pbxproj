@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF7C81B81D8DCEE50076460D /* BLELogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7C81B71D8DCEE50076460D /* BLELogger.swift */; };
+		BF7C81B91D8DCEE50076460D /* BLELogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7C81B71D8DCEE50076460D /* BLELogger.swift */; };
 		BF986EF01D6B8EBA00CF7A14 /* BLEHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = BFC46BFD1D6B8D07009F3778 /* BLEHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BF986EF41D6B90D300CF7A14 /* BLEHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF986EF21D6B90D300CF7A14 /* BLEHelper.swift */; };
 		BF986EF51D6B90D300CF7A14 /* NSData+Int8.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF986EF31D6B90D300CF7A14 /* NSData+Int8.swift */; };
@@ -16,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF7C81B71D8DCEE50076460D /* BLELogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLELogger.swift; sourceTree = "<group>"; };
 		BF986EE81D6B8E9000CF7A14 /* BLEHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BLEHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF986EF21D6B90D300CF7A14 /* BLEHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEHelper.swift; sourceTree = "<group>"; };
 		BF986EF31D6B90D300CF7A14 /* NSData+Int8.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+Int8.swift"; sourceTree = "<group>"; };
@@ -47,6 +50,7 @@
 			children = (
 				BF986EF21D6B90D300CF7A14 /* BLEHelper.swift */,
 				BF986EF31D6B90D300CF7A14 /* NSData+Int8.swift */,
+				BF7C81B71D8DCEE50076460D /* BLELogger.swift */,
 			);
 			path = Classes;
 			sourceTree = SOURCE_ROOT;
@@ -196,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF7C81B91D8DCEE50076460D /* BLELogger.swift in Sources */,
 				BF986EF61D6B90D900CF7A14 /* BLEHelper.swift in Sources */,
 				BF986EF71D6B90DC00CF7A14 /* NSData+Int8.swift in Sources */,
 			);
@@ -205,6 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF7C81B81D8DCEE50076460D /* BLELogger.swift in Sources */,
 				BF986EF41D6B90D300CF7A14 /* BLEHelper.swift in Sources */,
 				BF986EF51D6B90D300CF7A14 /* NSData+Int8.swift in Sources */,
 			);
@@ -394,6 +400,7 @@
 				BF986EEE1D6B8E9000CF7A14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BFC46BE21D6B87E4009F3778 /* Build configuration list for PBXProject "BLEHelper" */ = {
 			isa = XCConfigurationList;

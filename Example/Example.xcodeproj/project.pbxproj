@@ -123,6 +123,7 @@
 				TargetAttributes = {
 					BF5119601D8B2B5C006A319A = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 3FD8D4844P;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -334,6 +335,7 @@
 			baseConfigurationReference = 13D30DABBE9CD4C1C3FE767B /* Pods-Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3FD8D4844P;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.mathiaskoehnke.Example;
@@ -346,6 +348,7 @@
 			baseConfigurationReference = 919311D79FE2B88683E063EB /* Pods-Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3FD8D4844P;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.mathiaskoehnke.Example;

@@ -26,15 +26,45 @@ import BLEHelper
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var connectionLabel : UILabel!
+    @IBOutlet weak var button : UIButton!
+    
+    var bleHelper: BLEHelper!
+    
+    enum ButtonState : String {
+        case on = "On"
+        case off = "Off"
+    }
+    
+    let serviceUUID = "19B10000-E8F2-537E-4F6C-D104768A1214"
+    let characteristicUUID = "19B10001-E8F2-537E-4F6C-D104768A1214"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        let helper = BLEHelper(serviceUUID: "serviceUUID", delegate: self)
+
+        bleHelper = BLEHelper(serviceUUID: serviceUUID, delegate: self)
+        
+        bleHelper.read(uuid: characteristicUUID) { [weak self] (value) in
+            self?.updateButtonState(value: value)
+        }
+    }
+}
+
+extension ViewController {
+    @IBAction func buttonTouched(sender: AnyObject) {
+        let value : Int8 = (button.title(for: .normal) == ButtonState.on.rawValue) ? 1 : 0
+        bleHelper.write(value: value, for: characteristicUUID)
+    }
+    func updateButtonState(value: Int8) {
+        button.setTitle((value == 0) ? ButtonState.on.rawValue : ButtonState.off.rawValue, for: .normal)
     }
 }
 
 extension ViewController : BLEHelperDelegate {
-    func helper(_ BLEHelper: BLEHelper, didReceiveValue value: Int8) {
-        
+    func helperDidChangeConnectionState(peripheral: String, isConnected: Bool) {
+        connectionLabel.text = (isConnected) ? "Connected to \(peripheral)" : "Disconnected"
+    }
+    func helperDidReceiveValue(value: Int8) {
+        updateButtonState(value: value)
     }
 }

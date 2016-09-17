@@ -31,38 +31,82 @@
 import CoreBluetooth
 
 public protocol BLEHelperDelegate: class {
-    func helper(_ BLEHelper: BLEHelper, didReceiveValue value: Int8)
+    func helperDidChangeConnectionState(peripheral: String, isConnected: Bool)
+    func helperDidReceiveValue(value: Int8)
 }
 
 public class BLEHelper: NSObject {
-    private(set) var serviceUUID: String = "de.mathiaskoehnke.BLEHelper"
-    weak var delegate: BLEHelperDelegate?
+    
+    public var connectedPeripheral : String? {
+        return coordinator.connectedPeripheral?.name
+    }
+    
+    public weak var delegate : BLEHelperDelegate? {
+        return coordinator.delegate
+    }
+    
+    public var serviceUUID : String {
+        return coordinator.serviceUUID
+    }
+    
+    private var coordinator : BLECoordinator!
+    private override init() {}
+    
+    public init(serviceUUID: String, delegate: BLEHelperDelegate?) {
+        self.coordinator = BLECoordinator(serviceUUID: serviceUUID, delegate: delegate)
+        super.init()
+    }
+    
+    
+    public func write(value: Int8, for uuid: String) {
+        coordinator.write(value: value, for: uuid)
+    }
+    
+    public func read(uuid: String, result: ((_ value: Int8) -> Void)?) {
+        coordinator.read(uuid: uuid, result: result)
+    }
+    
+    public func close() {
+        coordinator.close()
+    }
+    
+}
 
-    internal var centralManager: CBCentralManager!
-    internal var connectedPeripheral: CBPeripheral?
-    internal var targetService: CBService?
+
+// Hide Protocol Conformance
+
+fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+
+    weak var delegate: BLEHelperDelegate?
     
-    internal var writableCharacteristics = [CBCharacteristic]()
-    internal var readRequests = [String : (Int8) -> Void]()
+    var serviceUUID: String = "de.mathiaskoehnke.BLEHelper"
+    let defaultPeripheralName : String = "Unknown"
     
-    internal let operationQueue = { () -> OperationQueue in 
+    var centralManager: CBCentralManager!
+    var connectedPeripheral: CBPeripheral?
+    var targetService: CBService?
+    
+    var writableCharacteristics = [CBCharacteristic]()
+    var readRequests = [String : (Int8) -> Void]()
+    
+    let operationQueue = { () -> OperationQueue in
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         queue.isSuspended = true
         return queue
     }()
     
-    public init(serviceUUID: String, delegate: BLEHelperDelegate?) {
+    init(serviceUUID: String, delegate: BLEHelperDelegate?) {
         self.serviceUUID = serviceUUID
         self.delegate = delegate
-
+        
         super.init()
-
+        
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
     private override init() {}
-
+    
     func write(value: Int8, for uuid: String) {
         operationQueue.addOperation { [weak self] in
             guard let peripheral = self?.connectedPeripheral, let characteristic = self?.writableCharacteristics.filter({ $0.uuid == CBUUID(string: uuid) }).first else {
@@ -72,7 +116,7 @@ public class BLEHelper: NSObject {
             peripheral.writeValue(data, for: characteristic, type: .withResponse)
         }
     }
-
+    
     func read(uuid: String, result: ((_ value: Int8) -> Void)?) {
         operationQueue.addOperation { [weak self] in
             guard let peripheral = self?.connectedPeripheral, let characteristic = self?.writableCharacteristics.filter({ $0.uuid == CBUUID(string: uuid) }).first else {
@@ -94,30 +138,37 @@ public class BLEHelper: NSObject {
         
         // TODO unsubscibe notifications
     }
+
 }
 
-extension BLEHelper: CBCentralManagerDelegate {
-    public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+// MARK: CBCentralManagerDelegate
+
+fileprivate extension BLECoordinator {
+    @objc(centralManager:didConnectPeripheral:)
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        delegate?.helperDidChangeConnectionState(peripheral: peripheral.name ?? defaultPeripheralName, isConnected: true)
         peripheral.discoverServices(nil)
     }
-
-    public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    
+    @objc(centralManager:didDiscoverPeripheral:advertisementData:RSSI:)
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         connectedPeripheral = peripheral
-
+        
         if let connectedPeripheral = connectedPeripheral {
             connectedPeripheral.delegate = self
             centralManager.connect(connectedPeripheral, options: nil)
         }
         centralManager.stopScan()
     }
-
-    public func centralManagerDidUpdateState(_ central: CBCentralManager) {
+    
+    @objc func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
             startScan()
         }
     }
     
-    public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+    @objc func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        delegate?.helperDidChangeConnectionState(peripheral: peripheral.name ?? defaultPeripheralName, isConnected: false)
         startScan()
     }
     
@@ -127,24 +178,27 @@ extension BLEHelper: CBCentralManagerDelegate {
     }
 }
 
-extension BLEHelper: CBPeripheralDelegate {
-    public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+// MARK: CBPeripheralDelegate
+
+fileprivate extension BLECoordinator {
+    @objc func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else {
             return
         }
-
+        
         targetService = services.first
         if let service = services.first {
             targetService = service
             peripheral.discoverCharacteristics(nil, for: service)
         }
     }
-
-    public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+    
+    @objc(peripheral:didDiscoverCharacteristicsForService:error:)
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else {
             return
         }
-
+        
         for characteristic in characteristics {
             if characteristic.properties.contains(.write) || characteristic.properties.contains(.writeWithoutResponse) {
                 writableCharacteristics.append(characteristic)
@@ -154,22 +208,24 @@ extension BLEHelper: CBPeripheralDelegate {
         
         operationQueue.isSuspended = false
     }
-
-    public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+    
+    @objc(peripheral:didUpdateValueForCharacteristic:error:)
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard let data = characteristic.value, let delegate = delegate else {
             return
         }
-
+        
         let uuid = characteristic.uuid.uuidString
         if let request = readRequests[uuid] {
             request(data.int8Value())
             readRequests.removeValue(forKey: uuid)
         } else {
-            delegate.helper(self, didReceiveValue: data.int8Value())
+            delegate.helperDidReceiveValue(value: data.int8Value())
         }
     }
     
-    public func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+    @objc(peripheral:didWriteValueForCharacteristic:error:)
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             print("Error writing value for peripheral \(peripheral.name): \(error.localizedDescription)")
             return
