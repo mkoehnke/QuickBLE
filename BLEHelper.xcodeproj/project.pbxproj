@@ -52,7 +52,8 @@
 				BF986EF31D6B90D300CF7A14 /* NSData+Int8.swift */,
 				BF7C81B71D8DCEE50076460D /* BLELogger.swift */,
 			);
-			path = Classes;
+			name = Classes;
+			path = Sources;
 			sourceTree = SOURCE_ROOT;
 		};
 		BFC46BDE1D6B87E4009F3778 = {

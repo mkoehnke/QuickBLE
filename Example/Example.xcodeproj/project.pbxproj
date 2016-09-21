@@ -21,6 +21,7 @@
 		919311D79FE2B88683E063EB /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		B7E41ED53586DF80071B9714 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF23060B1D9312A600B38891 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		BF23060D1D932E0E00B38891 /* BLEHelper.swiftmodule */ = {isa = PBXFileReference; lastKnownFileType = file; name = BLEHelper.swiftmodule; path = ../../../../Desktop/BLEHelper.swiftmodule; sourceTree = "<group>"; };
 		BF5119611D8B2B5C006A319A /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF5119641D8B2B5C006A319A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF5119661D8B2B5C006A319A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +46,7 @@
 		072B743B961EC4B25028EA14 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF23060D1D932E0E00B38891 /* BLEHelper.swiftmodule */,
 				B7E41ED53586DF80071B9714 /* Pods_Example.framework */,
 			);
 			name = Frameworks;

@@ -19,8 +19,8 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/mkoehnke/BLEHelper.git", :tag => s.version.to_s }
 
-  s.source_files  = "Classes/*.{swift}"
-  s.exclude_files = "Classes/Exclude"
+  s.source_files  = "Sources/*.{swift}"
+  s.exclude_files = "Sources/Exclude"
 
   s.requires_arc = true
 
