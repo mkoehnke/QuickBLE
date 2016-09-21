@@ -23,12 +23,12 @@
 
 import UIKit
 
+struct Static {
+    static let ServiceUUIDKey : String = "ServiceUUIDKey"
+    static let CharacteristicUUIDKey : String = "CharacteristicUUIDKey"
+}
+
 class Configuration {
-    
-    struct Static {
-        fileprivate static let ServiceUUIDKey : String = "ServiceUUIDKey"
-        fileprivate static let CharacteristicUUIDKey : String = "CharacteristicUUIDKey"
-    }
     
     class func hasBeenSetup() -> Bool {
         if let _ = readValue(key: Static.ServiceUUIDKey), let _ = readValue(key: Static.CharacteristicUUIDKey) {
@@ -43,17 +43,19 @@ class Configuration {
     
     class func presentConfiguration(dismissBlock: @escaping (_ setupComplete: Bool) -> Void) {
         let configuration = retrieveConfiguration()
-        let alert = UIAlertController(title: "Configuration", message: "Enter", preferredStyle: .alert)
+        let title = NSLocalizedString("Arduino Connection", comment: "")
+        let text = NSLocalizedString("Please enter the SERVICE and CHARACTERISTIC unique identifiers of your Arduino:", comment: "")
+        let alert = UIAlertController(title: title, message: text, preferredStyle: .alert)
         alert.addTextField { (serviceTextField) in
-            serviceTextField.placeholder = "Service"
+            serviceTextField.placeholder = NSLocalizedString("Service Identifier", comment: "")
             serviceTextField.text = configuration[Static.ServiceUUIDKey] ?? ""
         }
         alert.addTextField { (characteristicTextField) in
-            characteristicTextField.placeholder = "Characteristic"
+            characteristicTextField.placeholder = NSLocalizedString("Characteristic Identifier", comment: "")
             characteristicTextField.text = configuration[Static.CharacteristicUUIDKey] ?? ""
         }
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Save", comment: ""), style: .default, handler: { (action) in
             let service = alert.textFields?.first?.text
             let characteristic = alert.textFields?.last?.text
             saveConfiguration(service: service, characteristic: characteristic)
@@ -68,10 +70,10 @@ class Configuration {
         UserDefaults.standard.synchronize()
     }
     
-    class func retrieveConfiguration() -> [String : String?] {
-        var configuration = [String : String?]()
-        configuration[Static.ServiceUUIDKey] = UserDefaults.standard.string(forKey: Static.ServiceUUIDKey)
-        configuration[Static.CharacteristicUUIDKey] = UserDefaults.standard.string(forKey: Static.CharacteristicUUIDKey)
+    class func retrieveConfiguration() -> [String : String] {
+        var configuration = [String : String]()
+        configuration[Static.ServiceUUIDKey] = UserDefaults.standard.string(forKey: Static.ServiceUUIDKey) ?? ""
+        configuration[Static.CharacteristicUUIDKey] = UserDefaults.standard.string(forKey: Static.CharacteristicUUIDKey) ?? ""
         return configuration
     }
 }

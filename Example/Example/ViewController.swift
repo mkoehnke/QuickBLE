@@ -29,15 +29,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var connectionLabel : UILabel!
     @IBOutlet weak var button : UIButton!
     
-    var bleHelper: BLEHelper!
+    var bleHelper: BLEHelper?
     
     enum ButtonState : String {
         case on = "On"
         case off = "Off"
     }
     
-    let serviceUUID = "19B10000-E8F2-537E-4F6C-D104768A1214"
-    let characteristicUUID = "19B10001-E8F2-537E-4F6C-D104768A1214"
+    //let serviceUUID = "19B10000-E8F2-537E-4F6C-D104768A1214"
+    //let characteristicUUID = "19B10001-E8F2-537E-4F6C-D104768A1214"
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -51,21 +51,32 @@ class ViewController: UIViewController {
     }
     
     func start() {
-        bleHelper = BLEHelper.start(service: serviceUUID, delegate: self)
-        bleHelper.read(uuid: characteristicUUID) { [weak self] (value) in
-            self?.updateButtonState(value: value)
+        let config = Configuration.retrieveConfiguration()
+        if let service = config[Static.ServiceUUIDKey], let characteristic = config[Static.CharacteristicUUIDKey] {
+            bleHelper = BLEHelper.start(service: service, delegate: self)
+            bleHelper?.read(uuid: characteristic) { [weak self] (value) in
+                self?.updateButtonState(value: value)
+            }
         }
+    }
+    
+    func stop() {
+        bleHelper?.stop()
+        bleHelper = nil
     }
 }
 
 extension ViewController {
     @IBAction func buttonTouched(sender: AnyObject) {
-        let value : Int8 = (button.title(for: .normal) == ButtonState.on.rawValue) ? 1 : 0
-        bleHelper.write(value: value, for: characteristicUUID)
+        let config = Configuration.retrieveConfiguration()
+        if let characteristic = config[Static.CharacteristicUUIDKey] {
+            let value : Int8 = (button.title(for: .normal) == ButtonState.on.rawValue) ? 1 : 0
+            bleHelper?.write(value: value, for: characteristic)
+        }
     }
     func updateButtonState(value: Int8) {
         button.setTitle((value == 0) ? ButtonState.on.rawValue : ButtonState.off.rawValue, for: .normal)
-        button.isEnabled = (Configuration.hasBeenSetup()) && bleHelper.connectedPeripheral != nil
+        button.isEnabled = (Configuration.hasBeenSetup()) && bleHelper?.connectedPeripheral != nil
     }
 }
 
@@ -81,7 +92,10 @@ extension ViewController : BLEHelperDelegate {
 extension ViewController {
     @IBAction func settingsButtonTouched(sender: AnyObject) {
         Configuration.presentConfiguration { [weak self] (setupComplete) in
-            if setupComplete { self?.start() }
+            if setupComplete {
+                self?.stop()
+                self?.start()
+            }
         }
     }
 }
