@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -24,22 +24,38 @@
                                     <constraint firstAttribute="height" constant="33" id="c0J-Xg-bwQ"/>
                                 </constraints>
                                 <state key="normal" image="settings"/>
+                                <connections>
+                                    <action selector="settingsButtonTouchedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Cyd-ii-QF7"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BLEHelper" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7TW-hZ-eVj">
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="39"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7TW-hZ-eVj">
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Arduino
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="39" name="HelveticaNeue-Bold"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Connect">
+                                        <attributes>
+                                            <font key="NSFont" size="27" name="HelveticaNeue-Thin"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="0.80000000000000004" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZhQ-cR-w3u">
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZhQ-cR-w3u">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="cZF-on-K5f"/>
                                     <constraint firstAttribute="height" constant="150" id="lzP-kx-vMu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
-                                <state key="normal" title="Off">
+                                <state key="normal" title="Off" backgroundImage="bg_button_enabled">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="disabled" backgroundImage="bg_button_disabled"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="75"/>
@@ -72,7 +88,7 @@
                             <constraint firstItem="7TW-hZ-eVj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="hbf-sv-8Af"/>
                             <constraint firstItem="6Gv-1W-hV2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="o2L-fA-1Gg"/>
                             <constraint firstItem="6Gv-1W-hV2" firstAttribute="top" secondItem="7TW-hZ-eVj" secondAttribute="bottom" constant="11" id="pNw-mA-dmc"/>
-                            <constraint firstItem="7TW-hZ-eVj" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="25" id="u54-UJ-7jT"/>
+                            <constraint firstItem="7TW-hZ-eVj" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="u54-UJ-7jT"/>
                             <constraint firstItem="ElS-LQ-jaq" firstAttribute="centerY" secondItem="7TW-hZ-eVj" secondAttribute="centerY" constant="2" id="wKi-kd-XVm"/>
                         </constraints>
                     </view>
@@ -90,6 +106,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bg_button_disabled" width="100" height="100"/>
+        <image name="bg_button_enabled" width="100" height="100"/>
         <image name="settings" width="26" height="26"/>
     </resources>
 </document>

@@ -20,12 +20,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-
-// Modified Version of https://github.com/nebs/hello-bluetooth (SimpleBluetoothIO)
-// - added read function
-// - commands are added to a queue
-// - added characteristic propertie to write function
+//
+// This is an impoved version of SimpleBluetoothIO by Nebojsa Petrovic 
+// @see https://github.com/nebs/hello-bluetooth
 
 
 import CoreBluetooth
@@ -45,18 +42,22 @@ public class BLEHelper: NSObject {
         return coordinator.delegate
     }
     
-    public var serviceUUID : String {
-        return coordinator.serviceUUID
+    public var service : String {
+        return coordinator.service
     }
     
     private var coordinator : BLECoordinator!
+    
     private override init() {}
     
-    public init(serviceUUID: String, delegate: BLEHelperDelegate?) {
-        self.coordinator = BLECoordinator(serviceUUID: serviceUUID, delegate: delegate)
+    private init(service: String, delegate: BLEHelperDelegate?) {
+        self.coordinator = BLECoordinator(serviceUUID: service, delegate: delegate)
         super.init()
     }
     
+    public class func start(service: String, delegate: BLEHelperDelegate?) -> BLEHelper {
+        return BLEHelper(service: service, delegate: delegate)
+    }
     
     public func write(value: Int8, for uuid: String) {
         coordinator.write(value: value, for: uuid)
@@ -66,8 +67,8 @@ public class BLEHelper: NSObject {
         coordinator.read(uuid: uuid, result: result)
     }
     
-    public func close() {
-        coordinator.close()
+    public func stop() {
+        coordinator.stop()
     }
     
 }
@@ -79,7 +80,7 @@ fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeriphe
 
     weak var delegate: BLEHelperDelegate?
     
-    var serviceUUID: String = "de.mathiaskoehnke.BLEHelper"
+    var service: String = "de.mathiaskoehnke.BLEHelper"
     let defaultPeripheralName : String = "Unknown"
     
     var centralManager: CBCentralManager!
@@ -97,7 +98,7 @@ fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeriphe
     }()
     
     init(serviceUUID: String, delegate: BLEHelperDelegate?) {
-        self.serviceUUID = serviceUUID
+        self.service = serviceUUID
         self.delegate = delegate
         
         super.init()
@@ -127,7 +128,7 @@ fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeriphe
         }
     }
     
-    func close() {
+    func stop() {
         operationQueue.cancelAllOperations()
         centralManager.stopScan()
         if let connectedPeripheral = connectedPeripheral {
@@ -174,7 +175,7 @@ fileprivate extension BLECoordinator {
     
     func startScan() {
         operationQueue.isSuspended = true
-        centralManager.scanForPeripherals(withServices: [CBUUID(string: serviceUUID)], options: nil)
+        centralManager.scanForPeripherals(withServices: [CBUUID(string: service)], options: nil)
     }
 }
 

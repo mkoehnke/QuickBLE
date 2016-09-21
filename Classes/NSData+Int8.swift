@@ -20,9 +20,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+//
+// This is an impoved version of SimpleBluetoothIO by Nebojsa Petrovic
+// @see https://github.com/nebs/hello-bluetooth
 
-
-// Modified Version of https://github.com/nebs/hello-bluetooth (SimpleBluetoothIO)
 
 import Foundation
 

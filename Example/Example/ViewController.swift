@@ -39,11 +39,19 @@ class ViewController: UIViewController {
     let serviceUUID = "19B10000-E8F2-537E-4F6C-D104768A1214"
     let characteristicUUID = "19B10001-E8F2-537E-4F6C-D104768A1214"
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        bleHelper = BLEHelper(serviceUUID: serviceUUID, delegate: self)
-        
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !Configuration.hasBeenSetup() {
+            Configuration.presentConfiguration { [weak self] (setupComplete) in
+                if setupComplete { self?.start() }
+            }
+        } else {
+            start()
+        }
+    }
+    
+    func start() {
+        bleHelper = BLEHelper.start(service: serviceUUID, delegate: self)
         bleHelper.read(uuid: characteristicUUID) { [weak self] (value) in
             self?.updateButtonState(value: value)
         }
@@ -57,6 +65,7 @@ extension ViewController {
     }
     func updateButtonState(value: Int8) {
         button.setTitle((value == 0) ? ButtonState.on.rawValue : ButtonState.off.rawValue, for: .normal)
+        button.isEnabled = (Configuration.hasBeenSetup()) && bleHelper.connectedPeripheral != nil
     }
 }
 
@@ -66,5 +75,13 @@ extension ViewController : BLEHelperDelegate {
     }
     func helperDidReceiveValue(value: Int8) {
         updateButtonState(value: value)
+    }
+}
+
+extension ViewController {
+    @IBAction func settingsButtonTouched(sender: AnyObject) {
+        Configuration.presentConfiguration { [weak self] (setupComplete) in
+            if setupComplete { self?.start() }
+        }
     }
 }
