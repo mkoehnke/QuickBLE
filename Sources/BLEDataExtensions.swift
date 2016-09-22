@@ -29,15 +29,37 @@ import Foundation
 
 extension Data {
 
-    static func dataWithValue<T>(_ value: T) -> Data {
+    static func dataWithValue<T:CharacteristicDataConverter>(_ value: T) -> Data {
         var variableValue : T = value
         return Data(bytes: UnsafeMutablePointer(&variableValue), count: MemoryLayout<T>.size)
     }
 
-    func int8Value() -> Int8 {
-        var value: UInt8 = 0
-        copyBytes(to: &value, count: MemoryLayout<UInt8>.size)
-        return Int8(value)
+    func value<T:CharacteristicDataConverter>() -> T? {
+        return T.value(self)
     }
+}
 
+
+public protocol CharacteristicDataConverter {
+    static func value(_ data: Data?) -> Self?
+}
+
+extension String : CharacteristicDataConverter {
+    public static func value(_ data: Data?) -> String? {
+        if let data = data {
+            return String(data: data, encoding: String.Encoding.utf8)
+        }
+        return nil
+    }
+}
+
+extension Int8 : CharacteristicDataConverter {
+    public static func value(_ data: Data?) -> Int8? {
+        if let data = data {
+            var value: UInt8 = 0
+            data.copyBytes(to: &value, count: MemoryLayout<UInt8>.size)
+            return Int8(value)
+        }
+        return nil
+    }
 }

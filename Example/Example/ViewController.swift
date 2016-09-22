@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         let config = Configuration.retrieveConfiguration()
         if let service = config[Static.ServiceUUIDKey], let characteristic = config[Static.CharacteristicUUIDKey] {
             bleHelper = BLEHelper.start(service: service, delegate: self)
-            bleHelper?.read(uuid: characteristic) { [weak self] (value) in
+            bleHelper?.read(uuid: characteristic) { [weak self] (value : Int8?) in
                 self?.updateButtonState(value: value)
             }
         }
@@ -70,7 +70,7 @@ extension ViewController {
             bleHelper?.write(value: value, for: characteristic)
         }
     }
-    func updateButtonState(value: Int8) {
+    func updateButtonState(value: Int8?) {
         button.setTitle((value == 0) ? ButtonState.on.rawValue : ButtonState.off.rawValue, for: .normal)
         button.isEnabled = (Configuration.hasBeenSetup()) && bleHelper?.connectedPeripheral != nil
     }
@@ -80,8 +80,8 @@ extension ViewController : BLEHelperDelegate {
     func helperDidChangeConnectionState(peripheral: String, isConnected: Bool) {
         connectionLabel.text = (isConnected) ? "Connected to \(peripheral)" : "Disconnected"
     }
-    func helperDidWrite(value: Int8, uuid: String) {
-        updateButtonState(value: value)
+    func helperDidUpdate(value: AnyObject, uuid: String) {
+        updateButtonState(value: value as? Int8)
     }
 }
 

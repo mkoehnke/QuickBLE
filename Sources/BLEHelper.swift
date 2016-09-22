@@ -37,7 +37,7 @@ import CoreBluetooth
  */
 public protocol BLEHelperDelegate: class {
     func helperDidChangeConnectionState(peripheral: String, isConnected: Bool)
-    func helperDidWrite(value: Int8, uuid: String)
+    func helperDidUpdate(value: AnyObject, uuid: String)
 }
 
 /*!
@@ -70,12 +70,12 @@ public class BLEHelper: NSObject {
     }
     
     /// Sets value for the specified characteristic unique identifier.
-    public func write(value: Int8, for uuid: String) {
+    public func write<T:CharacteristicDataConverter>(value: T, for uuid: String) {
         coordinator.write(value: value, for: uuid)
     }
     
     /// Reads the value of the specified characteristic.
-    public func read(uuid: String, result: ((_ value: Int8) -> Void)?) {
+    public func read<T:CharacteristicDataConverter>(uuid: String, result: @escaping (_ value: T?) -> Void) {
         coordinator.read(uuid: uuid, result: result)
     }
     
@@ -110,7 +110,7 @@ fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeriphe
     var targetService: CBService?
     
     var writableCharacteristics = [CBCharacteristic]()
-    var readRequests = [String : (Int8) -> Void]()
+    var readRequests = [String : (Data?) -> Void]()
     
     let operationQueue = { () -> OperationQueue in
         let queue = OperationQueue()
@@ -130,7 +130,7 @@ fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeriphe
     
     private override init() {}
     
-    func write(value: Int8, for uuid: String) {
+    func write<T:CharacteristicDataConverter>(value: T, for uuid: String) {
         operationQueue.addOperation { [weak self] in
             guard let peripheral = self?.connectedPeripheral, let characteristic = self?.writableCharacteristics.filter({ $0.uuid == CBUUID(string: uuid) }).first else {
                 return
@@ -140,12 +140,17 @@ fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeriphe
         }
     }
     
-    func read(uuid: String, result: ((_ value: Int8) -> Void)?) {
+    func read<T:CharacteristicDataConverter>(uuid: String, result: @escaping (_ value: T?) -> Void) {
         operationQueue.addOperation { [weak self] in
             guard let peripheral = self?.connectedPeripheral, let characteristic = self?.writableCharacteristics.filter({ $0.uuid == CBUUID(string: uuid) }).first else {
                 return
             }
-            self?.readRequests[uuid] = result
+            
+            let convertDataClosure = { (data : Data?) in
+                result(T.value(data))
+            }
+            
+            self?.readRequests[uuid] = convertDataClosure
             peripheral.readValue(for: characteristic)
         }
     }
@@ -240,10 +245,10 @@ fileprivate extension BLECoordinator {
         
         let uuid = characteristic.uuid.uuidString
         if let request = readRequests[uuid] {
-            request(data.int8Value())
+            request(data)
             readRequests.removeValue(forKey: uuid)
         } else {
-            delegate.helperDidWrite(value: data.int8Value(), uuid: uuid)
+            //delegate.helperDidWrite(value: data.int8Value(), uuid: uuid) //TODO: wrap into a thunk
         }
     }
     
@@ -253,6 +258,6 @@ fileprivate extension BLECoordinator {
             print("Error writing value for peripheral \(peripheral.name): \(error.localizedDescription)")
             return
         }
-        peripheral.readValue(for: characteristic) // force 'didUpdateValue' call
+        peripheral.readValue(for: characteristic) // forcing 'didUpdateValue' call
     }
 }
