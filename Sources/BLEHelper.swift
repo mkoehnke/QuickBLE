@@ -27,50 +27,72 @@
 
 import CoreBluetooth
 
+
+/*!
+ *  @protocol BLEHelperDelegate
+ *
+ *  @discussion The delegate of a {@link BLEHelper} object must adopt the <code>BLEHelperDelegate</code> protocol. The
+ *              required methods indicate e.g. changes of the connection state and the result of an write operation.
+ *
+ */
 public protocol BLEHelperDelegate: class {
     func helperDidChangeConnectionState(peripheral: String, isConnected: Bool)
-    func helperDidReceiveValue(value: Int8)
+    func helperDidWrite(value: Int8, uuid: String)
 }
 
+/*!
+ *  @class BLEHelper
+ *
+ *  @discussion Entry point to connect to a peripheral.
+ *
+ */
 public class BLEHelper: NSObject {
     
+    
+    /// Returns the name of the connected peripheral (nil if not connected).
     public var connectedPeripheral : String? {
         return coordinator.connectedPeripheral?.name
     }
     
+    /// Returns the delegate object that will receive helper events.
     public weak var delegate : BLEHelperDelegate? {
         return coordinator.delegate
     }
     
+    /// Returns the service unique identifier.
     public var service : String {
         return coordinator.service
     }
     
-    private var coordinator : BLECoordinator!
-    
-    private override init() {}
-    
-    private init(service: String, delegate: BLEHelperDelegate?) {
-        self.coordinator = BLECoordinator(serviceUUID: service, delegate: delegate)
-        super.init()
-    }
-    
+    /// Returns an initialized BLEHelper object and starts the service discovery / connection.
     public class func start(service: String, delegate: BLEHelperDelegate?) -> BLEHelper {
         return BLEHelper(service: service, delegate: delegate)
     }
     
+    /// Sets value for the specified characteristic unique identifier.
     public func write(value: Int8, for uuid: String) {
         coordinator.write(value: value, for: uuid)
     }
     
+    /// Reads the value of the specified characteristic.
     public func read(uuid: String, result: ((_ value: Int8) -> Void)?) {
         coordinator.read(uuid: uuid, result: result)
     }
     
+    /// Cancels the connection to the peripheral.
     public func stop() {
         coordinator.stop()
     }
     
+    
+    /// Private Initializers
+    
+    private var coordinator : BLECoordinator!
+    private override init() {}
+    private init(service: String, delegate: BLEHelperDelegate?) {
+        self.coordinator = BLECoordinator(serviceUUID: service, delegate: delegate)
+        super.init()
+    }
 }
 
 
@@ -221,7 +243,7 @@ fileprivate extension BLECoordinator {
             request(data.int8Value())
             readRequests.removeValue(forKey: uuid)
         } else {
-            delegate.helperDidReceiveValue(value: data.int8Value())
+            delegate.helperDidWrite(value: data.int8Value(), uuid: uuid)
         }
     }
     

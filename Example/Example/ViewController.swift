@@ -36,9 +36,6 @@ class ViewController: UIViewController {
         case off = "Off"
     }
     
-    //let serviceUUID = "19B10000-E8F2-537E-4F6C-D104768A1214"
-    //let characteristicUUID = "19B10001-E8F2-537E-4F6C-D104768A1214"
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !Configuration.hasBeenSetup() {
@@ -62,7 +59,6 @@ class ViewController: UIViewController {
     
     func stop() {
         bleHelper?.stop()
-        bleHelper = nil
     }
 }
 
@@ -84,7 +80,7 @@ extension ViewController : BLEHelperDelegate {
     func helperDidChangeConnectionState(peripheral: String, isConnected: Bool) {
         connectionLabel.text = (isConnected) ? "Connected to \(peripheral)" : "Disconnected"
     }
-    func helperDidReceiveValue(value: Int8) {
+    func helperDidWrite(value: Int8, uuid: String) {
         updateButtonState(value: value)
     }
 }
