@@ -67,7 +67,7 @@ extension ViewController {
         let config = Configuration.retrieveConfiguration()
         if let characteristic = config[Static.CharacteristicUUIDKey] {
             let value : Int8 = (button.title(for: .normal) == ButtonState.on.rawValue) ? 1 : 0
-            bleHelper?.write(value: value, for: characteristic)
+            bleHelper?.write(data: value, for: characteristic)
         }
     }
     func updateButtonState(value: Int8?) {
@@ -80,8 +80,10 @@ extension ViewController : BLEHelperDelegate {
     func helperDidChangeConnectionState(peripheral: String, isConnected: Bool) {
         connectionLabel.text = (isConnected) ? "Connected to \(peripheral)" : "Disconnected"
     }
-    func helperDidUpdate(value: AnyObject, uuid: String) {
-        updateButtonState(value: value as? Int8)
+    
+    func helperDidUpdate<T : CharacteristicData>(data: T?, uuid: String) {
+        let value : Int8? = data?.getValue()
+        updateButtonState(value: value)
     }
 }
 

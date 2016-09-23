@@ -27,39 +27,49 @@
 
 import Foundation
 
-extension Data {
+public protocol CharacteristicData {
+    static func getValue(fromData data: Data?) -> Self?
+    func getValue<T:CharacteristicData>() -> T?
+}
 
-    static func dataWithValue<T:CharacteristicDataConverter>(_ value: T) -> Data {
-        var variableValue : T = value
-        return Data(bytes: UnsafeMutablePointer(&variableValue), count: MemoryLayout<T>.size)
+extension Data : CharacteristicData {
+    internal static func getData<T>(withValue value: T?) -> Data? {
+        if var variableValue : T = value {
+            return Data(bytes: UnsafeMutablePointer(&variableValue), count: MemoryLayout<T>.size)
+        }
+        return nil
     }
-
-    func value<T:CharacteristicDataConverter>() -> T? {
-        return T.value(self)
+    public static func getValue(fromData data: Data?) -> Data? {
+        return data
+    }
+    public func getValue<T : CharacteristicData>() -> T? {
+        return T.getValue(fromData: self)
     }
 }
 
 
-public protocol CharacteristicDataConverter {
-    static func value(_ data: Data?) -> Self?
-}
-
-extension String : CharacteristicDataConverter {
-    public static func value(_ data: Data?) -> String? {
+extension String : CharacteristicData {
+    public static func getValue(fromData data: Data?) -> String? {
         if let data = data {
             return String(data: data, encoding: String.Encoding.utf8)
         }
         return nil
     }
+    public func getValue<T : CharacteristicData>() -> T? {
+        return self as? T
+    }
 }
 
-extension Int8 : CharacteristicDataConverter {
-    public static func value(_ data: Data?) -> Int8? {
+extension Int8 : CharacteristicData {
+    public static func getValue(fromData data: Data?) -> Int8? {
         if let data = data {
-            var value: UInt8 = 0
-            data.copyBytes(to: &value, count: MemoryLayout<UInt8>.size)
-            return Int8(value)
+            var result: UInt8 = 0
+            data.copyBytes(to: &result, count: MemoryLayout<UInt8>.size)
+            return Int8(result)
         }
         return nil
+    }
+    public func getValue<T : CharacteristicData>() -> T? {
+        return self as? T
     }
 }
