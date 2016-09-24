@@ -70,12 +70,12 @@ public class BLEHelper: NSObject {
     }
     
     /// Sets value for the specified characteristic unique identifier.
-    public func write<T:CharacteristicData>(data: T, for uuid: String) {
-        coordinator.write(data: data, for: uuid)
+    public func write<T:CharacteristicValue>(value: T, for uuid: String) {
+        coordinator.write(value: value, for: uuid)
     }
     
     /// Reads the value of the specified characteristic.
-    public func read<T:CharacteristicData>(uuid: String, result: @escaping (_ data: T?) -> Void) {
+    public func read<T:CharacteristicValue>(uuid: String, result: @escaping (_ value: T?) -> Void) {
         coordinator.read(uuid: uuid, result: result)
     }
     
@@ -103,7 +103,6 @@ fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeriphe
     weak var delegate: BLEHelperDelegate?
     
     var service: String = "de.mathiaskoehnke.BLEHelper"
-    let defaultPeripheralName : String = "Unknown"
     
     var centralManager: CBCentralManager!
     var connectedPeripheral: CBPeripheral?
@@ -130,20 +129,22 @@ fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeriphe
     
     private override init() {}
     
-    func write<T:CharacteristicData>(data: T, for uuid: String) {
+    func write<T:CharacteristicValue>(value: T, for uuid: String) {
         operationQueue.addOperation { [weak self] in
             guard let peripheral = self?.connectedPeripheral, let characteristic = self?.writableCharacteristics.filter({ $0.uuid == CBUUID(string: uuid) }).first else {
+                BLELogger.log("Could not write value. Peripheral not connected or no characteristic found.")
                 return
             }
-            if let value = Data.getData(withValue: data) {
-                peripheral.writeValue(value, for: characteristic, type: .withResponse)
+            if let data = Data.getData(withValue: value) {
+                peripheral.writeValue(data, for: characteristic, type: .withResponse)
             }
         }
     }
     
-    func read<T:CharacteristicData>(uuid: String, result: @escaping (_ data: T?) -> Void) {
+    func read<T:CharacteristicValue>(uuid: String, result: @escaping (_ value: T?) -> Void) {
         operationQueue.addOperation { [weak self] in
             guard let peripheral = self?.connectedPeripheral, let characteristic = self?.writableCharacteristics.filter({ $0.uuid == CBUUID(string: uuid) }).first else {
+                BLELogger.log("Could not read value. Peripheral not connected or no characteristic found.")
                 return
             }
             
@@ -157,6 +158,7 @@ fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeriphe
     }
     
     func stop() {
+        BLELogger.log("Shutting down ...")
         operationQueue.cancelAllOperations()
         centralManager.stopScan()
         if let connectedPeripheral = connectedPeripheral {
@@ -175,12 +177,14 @@ fileprivate class BLECoordinator : NSObject, CBCentralManagerDelegate, CBPeriphe
 fileprivate extension BLECoordinator {
     @objc(centralManager:didConnectPeripheral:)
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        delegate?.helperDidChangeConnectionState(peripheral: peripheral.name ?? defaultPeripheralName, isConnected: true)
+        BLELogger.log("Did connect to peripheral '\(peripheral.displayName)' ...")
+        delegate?.helperDidChangeConnectionState(peripheral: peripheral.displayName, isConnected: true)
         peripheral.discoverServices(nil)
     }
     
     @objc(centralManager:didDiscoverPeripheral:advertisementData:RSSI:)
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        BLELogger.log("Did discover peripheral '\(peripheral.displayName)' ...")
         connectedPeripheral = peripheral
         
         if let connectedPeripheral = connectedPeripheral {
@@ -197,11 +201,13 @@ fileprivate extension BLECoordinator {
     }
     
     @objc func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        delegate?.helperDidChangeConnectionState(peripheral: peripheral.name ?? defaultPeripheralName, isConnected: false)
+        BLELogger.log("Peripheral '\(peripheral.displayName)' did disconnect ...")
+        delegate?.helperDidChangeConnectionState(peripheral: peripheral.displayName, isConnected: false)
         startScan()
     }
     
     func startScan() {
+        BLELogger.log("Start scanning for peripherals ...")
         operationQueue.isSuspended = true
         centralManager.scanForPeripherals(withServices: [CBUUID(string: service)], options: nil)
     }
@@ -217,8 +223,10 @@ fileprivate extension BLECoordinator {
         
         targetService = services.first
         if let service = services.first {
+            BLELogger.log("Did discover service '\(service.uuid.uuidString)' for peripheral '\(peripheral.displayName)' ...")
             targetService = service
             peripheral.discoverCharacteristics(nil, for: service)
+            BLELogger.log("Start discovering characteristics for service '\(service.uuid.uuidString)' ...")
         }
     }
     
@@ -230,6 +238,7 @@ fileprivate extension BLECoordinator {
         
         for characteristic in characteristics {
             if characteristic.properties.contains(.write) || characteristic.properties.contains(.writeWithoutResponse) {
+                BLELogger.log("Did discover characteristic '\(characteristic.uuid.uuidString) for service '\(service.uuid.uuidString)' ...")
                 writableCharacteristics.append(characteristic)
             }
             peripheral.setNotifyValue(true, for: characteristic)
@@ -256,9 +265,17 @@ fileprivate extension BLECoordinator {
     @objc(peripheral:didWriteValueForCharacteristic:error:)
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
-            print("Error writing value for peripheral \(peripheral.name): \(error.localizedDescription)")
+            BLELogger.log("Error writing value for peripheral \(peripheral.name): \(error.localizedDescription)")
             return
         }
         peripheral.readValue(for: characteristic) // forcing 'didUpdateValue' call
+    }
+}
+
+// MARK : Helper
+
+fileprivate extension CBPeripheral {
+    var displayName : String {
+        return name ?? "<Unknown>"
     }
 }

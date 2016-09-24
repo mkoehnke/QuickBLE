@@ -40,25 +40,22 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         if !Configuration.hasBeenSetup() {
             Configuration.presentConfiguration { [weak self] (setupComplete) in
-                if setupComplete { self?.start() }
+                if setupComplete { self?.restart() }
             }
         } else {
-            start()
+            restart()
         }
     }
     
-    func start() {
+    func restart() {
         let config = Configuration.retrieveConfiguration()
         if let service = config[Static.ServiceUUIDKey], let characteristic = config[Static.CharacteristicUUIDKey] {
+            bleHelper?.stop()
             bleHelper = BLEHelper.start(service: service, delegate: self)
             bleHelper?.read(uuid: characteristic) { [weak self] (value : Int8?) in
                 self?.updateButtonState(value: value)
             }
         }
-    }
-    
-    func stop() {
-        bleHelper?.stop()
     }
 }
 
@@ -67,7 +64,7 @@ extension ViewController {
         let config = Configuration.retrieveConfiguration()
         if let characteristic = config[Static.CharacteristicUUIDKey] {
             let value : Int8 = (button.title(for: .normal) == ButtonState.on.rawValue) ? 1 : 0
-            bleHelper?.write(data: value, for: characteristic)
+            bleHelper?.write(value: value, for: characteristic)
         }
     }
     func updateButtonState(value: Int8?) {
@@ -90,10 +87,7 @@ extension ViewController : BLEHelperDelegate {
 extension ViewController {
     @IBAction func settingsButtonTouched(sender: AnyObject) {
         Configuration.presentConfiguration { [weak self] (setupComplete) in
-            if setupComplete {
-                self?.stop()
-                self?.start()
-            }
+            if setupComplete { self?.restart() }
         }
     }
 }

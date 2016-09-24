@@ -28,8 +28,11 @@
 import Foundation
 
 public protocol CharacteristicData {
+    func getValue<T:CharacteristicValue>() -> T?
+}
+
+public protocol CharacteristicValue {
     static func getValue(fromData data: Data?) -> Self?
-    func getValue<T:CharacteristicData>() -> T?
 }
 
 extension Data : CharacteristicData {
@@ -39,28 +42,21 @@ extension Data : CharacteristicData {
         }
         return nil
     }
-    public static func getValue(fromData data: Data?) -> Data? {
-        return data
-    }
-    public func getValue<T : CharacteristicData>() -> T? {
+    public func getValue<T : CharacteristicValue>() -> T? {
         return T.getValue(fromData: self)
     }
 }
 
-
-extension String : CharacteristicData {
+extension String : CharacteristicValue {
     public static func getValue(fromData data: Data?) -> String? {
         if let data = data {
             return String(data: data, encoding: String.Encoding.utf8)
         }
         return nil
     }
-    public func getValue<T : CharacteristicData>() -> T? {
-        return self as? T
-    }
 }
 
-extension Int8 : CharacteristicData {
+extension Int8 : CharacteristicValue {
     public static func getValue(fromData data: Data?) -> Int8? {
         if let data = data {
             var result: UInt8 = 0
@@ -68,8 +64,5 @@ extension Int8 : CharacteristicData {
             return Int8(result)
         }
         return nil
-    }
-    public func getValue<T : CharacteristicData>() -> T? {
-        return self as? T
     }
 }
