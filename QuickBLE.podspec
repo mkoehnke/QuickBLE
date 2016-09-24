@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "QuickBLE"
-  s.version      = "0.9.0"
+  s.version      = "0.9.1"
   s.summary      = "A simple helper for communicating with Bluetooth LE devices (Arduino 101, etc.)"
 
   s.description  = <<-DESC
