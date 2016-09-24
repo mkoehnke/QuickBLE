@@ -2,10 +2,10 @@ Pod::Spec.new do |s|
 
   s.name         = "QuickBLE"
   s.version      = "0.9.0"
-  s.summary      = "A simple helper for communicating with Bluetooth LE devices ( watch, Arduino 101, etc.)"
+  s.summary      = "A simple helper for communicating with Bluetooth LE devices (Arduino 101, etc.)"
 
   s.description  = <<-DESC
-                   A simple helper for communicating with Bluetooth LE devices ( watch, Arduino 101, etc.)
+                   A simple helper for communicating with Bluetooth LE devices (Arduino 101, etc.) written in Swift.
 		   DESC
 
   s.homepage     = "https://github.com/mkoehnke/QuickBLE"
