@@ -22,14 +22,14 @@
 // THE SOFTWARE.
 
 import UIKit
-import BLEHelper
+import QuickBLE
 
 class ViewController: UIViewController {
 
     @IBOutlet weak var connectionLabel : UILabel!
     @IBOutlet weak var button : UIButton!
     
-    var bleHelper: BLEHelper?
+    var helper: QuickBLE?
     
     enum ButtonState : String {
         case on = "On"
@@ -50,9 +50,9 @@ class ViewController: UIViewController {
     func restart() {
         let config = Configuration.retrieveConfiguration()
         if let service = config[Static.ServiceUUIDKey], let characteristic = config[Static.CharacteristicUUIDKey] {
-            bleHelper?.stop()
-            bleHelper = BLEHelper.start(service: service, delegate: self)
-            bleHelper?.read(uuid: characteristic) { [weak self] (value : Int8?) in
+            helper?.stop()
+            helper = QuickBLE.start(service: service, delegate: self)
+            helper?.read(uuid: characteristic) { [weak self] (value : Int8?) in
                 self?.updateButtonState(value: value)
             }
         }
@@ -64,16 +64,16 @@ extension ViewController {
         let config = Configuration.retrieveConfiguration()
         if let characteristic = config[Static.CharacteristicUUIDKey] {
             let value : Int8 = (button.title(for: .normal) == ButtonState.on.rawValue) ? 1 : 0
-            bleHelper?.write(value: value, for: characteristic)
+            helper?.write(value: value, for: characteristic)
         }
     }
     func updateButtonState(value: Int8?) {
         button.setTitle((value == 0) ? ButtonState.on.rawValue : ButtonState.off.rawValue, for: .normal)
-        button.isEnabled = (Configuration.hasBeenSetup()) && bleHelper?.connectedPeripheral != nil
+        button.isEnabled = (Configuration.hasBeenSetup()) && helper?.connectedPeripheral != nil
     }
 }
 
-extension ViewController : BLEHelperDelegate {
+extension ViewController : QuickBLEDelegate {
     func helperDidChangeConnectionState(peripheral: String, isConnected: Bool) {
         connectionLabel.text = (isConnected) ? "Connected to \(peripheral)" : "Disconnected"
     }

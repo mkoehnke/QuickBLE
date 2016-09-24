@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 
-  s.name         = "BLEHelper"
+  s.name         = "QuickBLE"
   s.version      = "0.9.0"
   s.summary      = "A simple helper for communicating with Bluetooth LE devices ( watch, Arduino 101, etc.)"
 
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
                    A simple helper for communicating with Bluetooth LE devices ( watch, Arduino 101, etc.)
 		   DESC
 
-  s.homepage     = "https://github.com/mkoehnke/BLEHelper"
+  s.homepage     = "https://github.com/mkoehnke/QuickBLE"
 
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
 
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '9.1'
   s.osx.deployment_target = '10.11'
 
-  s.source       = { :git => "https://github.com/mkoehnke/BLEHelper.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/mkoehnke/QuickBLE.git", :tag => s.version.to_s }
 
   s.source_files  = "Sources/*.{swift}"
   s.exclude_files = "Sources/Exclude"

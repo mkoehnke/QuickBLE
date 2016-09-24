@@ -4,7 +4,7 @@ inhibit_all_warnings!
 use_frameworks!
 
 def import_pods
-    pod 'BLEHelper', :path => '../'
+    pod 'QuickBLE', :path => '../'
 end
 
 target 'Example' do

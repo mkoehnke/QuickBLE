@@ -1,5 +1,5 @@
 //
-// BLELogger.swift
+// QuickBLELogger.swift
 //
 // Copyright (c) 2016 Mathias Koehnke (http://www.mathiaskoehnke.de)
 //
@@ -24,8 +24,8 @@
 
 import Foundation
 
-/// BLEHelper Console Logger
-open class BLELogger : NSObject {
+/// QuickBLE Console Logger
+open class QuickBLELogger : NSObject {
     
     open static var enabled : Bool = true
     

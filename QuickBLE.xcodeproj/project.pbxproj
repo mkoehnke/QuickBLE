@@ -7,23 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF7C81B81D8DCEE50076460D /* BLELogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7C81B71D8DCEE50076460D /* BLELogger.swift */; };
-		BF7C81B91D8DCEE50076460D /* BLELogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7C81B71D8DCEE50076460D /* BLELogger.swift */; };
-		BF986EF01D6B8EBA00CF7A14 /* BLEHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = BFC46BFD1D6B8D07009F3778 /* BLEHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BF986EF41D6B90D300CF7A14 /* BLEHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF986EF21D6B90D300CF7A14 /* BLEHelper.swift */; };
-		BF986EF51D6B90D300CF7A14 /* BLEDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF986EF31D6B90D300CF7A14 /* BLEDataExtensions.swift */; };
-		BF986EF61D6B90D900CF7A14 /* BLEHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF986EF21D6B90D300CF7A14 /* BLEHelper.swift */; };
-		BF986EF71D6B90DC00CF7A14 /* BLEDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF986EF31D6B90D300CF7A14 /* BLEDataExtensions.swift */; };
-		BFC46BFF1D6B8D07009F3778 /* BLEHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = BFC46BFD1D6B8D07009F3778 /* BLEHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BF7C81B81D8DCEE50076460D /* QuickBLELogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7C81B71D8DCEE50076460D /* QuickBLELogger.swift */; };
+		BF7C81B91D8DCEE50076460D /* QuickBLELogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7C81B71D8DCEE50076460D /* QuickBLELogger.swift */; };
+		BF986EF01D6B8EBA00CF7A14 /* QuickBLE.h in Headers */ = {isa = PBXBuildFile; fileRef = BFC46BFD1D6B8D07009F3778 /* QuickBLE.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BF986EF41D6B90D300CF7A14 /* QuickBLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF986EF21D6B90D300CF7A14 /* QuickBLE.swift */; };
+		BF986EF51D6B90D300CF7A14 /* QuickBLEDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF986EF31D6B90D300CF7A14 /* QuickBLEDataExtensions.swift */; };
+		BF986EF61D6B90D900CF7A14 /* QuickBLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF986EF21D6B90D300CF7A14 /* QuickBLE.swift */; };
+		BF986EF71D6B90DC00CF7A14 /* QuickBLEDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF986EF31D6B90D300CF7A14 /* QuickBLEDataExtensions.swift */; };
+		BFC46BFF1D6B8D07009F3778 /* QuickBLE.h in Headers */ = {isa = PBXBuildFile; fileRef = BFC46BFD1D6B8D07009F3778 /* QuickBLE.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF7C81B71D8DCEE50076460D /* BLELogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLELogger.swift; sourceTree = "<group>"; };
-		BF986EE81D6B8E9000CF7A14 /* BLEHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BLEHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BF986EF21D6B90D300CF7A14 /* BLEHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEHelper.swift; sourceTree = "<group>"; };
-		BF986EF31D6B90D300CF7A14 /* BLEDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEDataExtensions.swift; sourceTree = "<group>"; };
-		BFC46BE81D6B87E4009F3778 /* BLEHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BLEHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFC46BFD1D6B8D07009F3778 /* BLEHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEHelper.h; sourceTree = "<group>"; };
+		BF7C81B71D8DCEE50076460D /* QuickBLELogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickBLELogger.swift; sourceTree = "<group>"; };
+		BF986EE81D6B8E9000CF7A14 /* QuickBLE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QuickBLE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF986EF21D6B90D300CF7A14 /* QuickBLE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickBLE.swift; sourceTree = "<group>"; };
+		BF986EF31D6B90D300CF7A14 /* QuickBLEDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickBLEDataExtensions.swift; sourceTree = "<group>"; };
+		BFC46BE81D6B87E4009F3778 /* QuickBLE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QuickBLE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFC46BFD1D6B8D07009F3778 /* QuickBLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickBLE.h; sourceTree = "<group>"; };
 		BFC46BFE1D6B8D07009F3778 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,9 +48,9 @@
 		BF986EF11D6B90D300CF7A14 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BF986EF21D6B90D300CF7A14 /* BLEHelper.swift */,
-				BF986EF31D6B90D300CF7A14 /* BLEDataExtensions.swift */,
-				BF7C81B71D8DCEE50076460D /* BLELogger.swift */,
+				BF986EF21D6B90D300CF7A14 /* QuickBLE.swift */,
+				BF986EF31D6B90D300CF7A14 /* QuickBLEDataExtensions.swift */,
+				BF7C81B71D8DCEE50076460D /* QuickBLELogger.swift */,
 			);
 			name = Classes;
 			path = Sources;
@@ -59,7 +59,7 @@
 		BFC46BDE1D6B87E4009F3778 = {
 			isa = PBXGroup;
 			children = (
-				BFC46BFC1D6B8D07009F3778 /* BLEHelper */,
+				BFC46BFC1D6B8D07009F3778 /* QuickBLE */,
 				BFC46BE91D6B87E4009F3778 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,20 +67,20 @@
 		BFC46BE91D6B87E4009F3778 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BFC46BE81D6B87E4009F3778 /* BLEHelper.framework */,
-				BF986EE81D6B8E9000CF7A14 /* BLEHelper.framework */,
+				BFC46BE81D6B87E4009F3778 /* QuickBLE.framework */,
+				BF986EE81D6B8E9000CF7A14 /* QuickBLE.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BFC46BFC1D6B8D07009F3778 /* BLEHelper */ = {
+		BFC46BFC1D6B8D07009F3778 /* QuickBLE */ = {
 			isa = PBXGroup;
 			children = (
 				BF986EF11D6B90D300CF7A14 /* Classes */,
-				BFC46BFD1D6B8D07009F3778 /* BLEHelper.h */,
+				BFC46BFD1D6B8D07009F3778 /* QuickBLE.h */,
 				BFC46BFE1D6B8D07009F3778 /* Info.plist */,
 			);
-			name = BLEHelper;
+			name = QuickBLE;
 			path = Framework;
 			sourceTree = "<group>";
 		};
@@ -91,7 +91,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF986EF01D6B8EBA00CF7A14 /* BLEHelper.h in Headers */,
+				BF986EF01D6B8EBA00CF7A14 /* QuickBLE.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,16 +99,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFC46BFF1D6B8D07009F3778 /* BLEHelper.h in Headers */,
+				BFC46BFF1D6B8D07009F3778 /* QuickBLE.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		BF986EE71D6B8E9000CF7A14 /* BLEHelper OSX */ = {
+		BF986EE71D6B8E9000CF7A14 /* QuickBLE OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BF986EEF1D6B8E9000CF7A14 /* Build configuration list for PBXNativeTarget "BLEHelper OSX" */;
+			buildConfigurationList = BF986EEF1D6B8E9000CF7A14 /* Build configuration list for PBXNativeTarget "QuickBLE OSX" */;
 			buildPhases = (
 				BF986EE31D6B8E9000CF7A14 /* Sources */,
 				BF986EE41D6B8E9000CF7A14 /* Frameworks */,
@@ -119,14 +119,14 @@
 			);
 			dependencies = (
 			);
-			name = "BLEHelper OSX";
+			name = "QuickBLE OSX";
 			productName = "BLEHelper OSX";
-			productReference = BF986EE81D6B8E9000CF7A14 /* BLEHelper.framework */;
+			productReference = BF986EE81D6B8E9000CF7A14 /* QuickBLE.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		BFC46BE71D6B87E4009F3778 /* BLEHelper */ = {
+		BFC46BE71D6B87E4009F3778 /* QuickBLE */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BFC46BF01D6B87E4009F3778 /* Build configuration list for PBXNativeTarget "BLEHelper" */;
+			buildConfigurationList = BFC46BF01D6B87E4009F3778 /* Build configuration list for PBXNativeTarget "QuickBLE" */;
 			buildPhases = (
 				BFC46BE31D6B87E4009F3778 /* Sources */,
 				BFC46BE41D6B87E4009F3778 /* Frameworks */,
@@ -137,9 +137,9 @@
 			);
 			dependencies = (
 			);
-			name = BLEHelper;
+			name = QuickBLE;
 			productName = BLEHelper;
-			productReference = BFC46BE81D6B87E4009F3778 /* BLEHelper.framework */;
+			productReference = BFC46BE81D6B87E4009F3778 /* QuickBLE.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -161,7 +161,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BFC46BE21D6B87E4009F3778 /* Build configuration list for PBXProject "BLEHelper" */;
+			buildConfigurationList = BFC46BE21D6B87E4009F3778 /* Build configuration list for PBXProject "QuickBLE" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -173,8 +173,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BFC46BE71D6B87E4009F3778 /* BLEHelper */,
-				BF986EE71D6B8E9000CF7A14 /* BLEHelper OSX */,
+				BFC46BE71D6B87E4009F3778 /* QuickBLE */,
+				BF986EE71D6B8E9000CF7A14 /* QuickBLE OSX */,
 			);
 		};
 /* End PBXProject section */
@@ -201,9 +201,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF7C81B91D8DCEE50076460D /* BLELogger.swift in Sources */,
-				BF986EF61D6B90D900CF7A14 /* BLEHelper.swift in Sources */,
-				BF986EF71D6B90DC00CF7A14 /* BLEDataExtensions.swift in Sources */,
+				BF7C81B91D8DCEE50076460D /* QuickBLELogger.swift in Sources */,
+				BF986EF61D6B90D900CF7A14 /* QuickBLE.swift in Sources */,
+				BF986EF71D6B90DC00CF7A14 /* QuickBLEDataExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,9 +211,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF7C81B81D8DCEE50076460D /* BLELogger.swift in Sources */,
-				BF986EF41D6B90D300CF7A14 /* BLEHelper.swift in Sources */,
-				BF986EF51D6B90D300CF7A14 /* BLEDataExtensions.swift in Sources */,
+				BF7C81B81D8DCEE50076460D /* QuickBLELogger.swift in Sources */,
+				BF986EF41D6B90D300CF7A14 /* QuickBLE.swift in Sources */,
+				BF986EF51D6B90D300CF7A14 /* QuickBLEDataExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,8 +231,8 @@
 				INFOPLIST_FILE = Framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.mathiaskoehnke.BLEHelper-OSX";
-				PRODUCT_NAME = BLEHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.mathiaskoehnke.QuickBLE-OSX";
+				PRODUCT_NAME = QuickBLE;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -249,8 +249,8 @@
 				INFOPLIST_FILE = Framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.mathiaskoehnke.BLEHelper-OSX";
-				PRODUCT_NAME = BLEHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.mathiaskoehnke.QuickBLE-OSX";
+				PRODUCT_NAME = QuickBLE;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -366,7 +366,7 @@
 				INFOPLIST_FILE = Framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.mathiaskoehnke.BLEHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = de.mathiaskoehnke.QuickBLE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -384,7 +384,7 @@
 				INFOPLIST_FILE = Framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.mathiaskoehnke.BLEHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = de.mathiaskoehnke.QuickBLE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -394,7 +394,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BF986EEF1D6B8E9000CF7A14 /* Build configuration list for PBXNativeTarget "BLEHelper OSX" */ = {
+		BF986EEF1D6B8E9000CF7A14 /* Build configuration list for PBXNativeTarget "QuickBLE OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BF986EED1D6B8E9000CF7A14 /* Debug */,
@@ -403,7 +403,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BFC46BE21D6B87E4009F3778 /* Build configuration list for PBXProject "BLEHelper" */ = {
+		BFC46BE21D6B87E4009F3778 /* Build configuration list for PBXProject "QuickBLE" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BFC46BEE1D6B87E4009F3778 /* Debug */,
@@ -412,7 +412,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BFC46BF01D6B87E4009F3778 /* Build configuration list for PBXNativeTarget "BLEHelper" */ = {
+		BFC46BF01D6B87E4009F3778 /* Build configuration list for PBXNativeTarget "QuickBLE" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BFC46BF11D6B87E4009F3778 /* Debug */,

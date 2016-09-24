@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BFC46BE71D6B87E4009F3778"
-               BuildableName = "BLEHelper.framework"
-               BlueprintName = "BLEHelper"
-               ReferencedContainer = "container:BLEHelper.xcodeproj">
+               BlueprintIdentifier = "BF986EE71D6B8E9000CF7A14"
+               BuildableName = "QuickBLE.framework"
+               BlueprintName = "QuickBLE OSX"
+               ReferencedContainer = "container:QuickBLE.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BFC46BE71D6B87E4009F3778"
-            BuildableName = "BLEHelper.framework"
-            BlueprintName = "BLEHelper"
-            ReferencedContainer = "container:BLEHelper.xcodeproj">
+            BlueprintIdentifier = "BF986EE71D6B8E9000CF7A14"
+            BuildableName = "QuickBLE.framework"
+            BlueprintName = "QuickBLE OSX"
+            ReferencedContainer = "container:QuickBLE.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BFC46BE71D6B87E4009F3778"
-            BuildableName = "BLEHelper.framework"
-            BlueprintName = "BLEHelper"
-            ReferencedContainer = "container:BLEHelper.xcodeproj">
+            BlueprintIdentifier = "BF986EE71D6B8E9000CF7A14"
+            BuildableName = "QuickBLE.framework"
+            BlueprintName = "QuickBLE OSX"
+            ReferencedContainer = "container:QuickBLE.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -1,16 +1,16 @@
 PODS:
-  - BLEHelper (0.9.0)
+  - QuickBLE (0.9.0)
 
 DEPENDENCIES:
-  - BLEHelper (from `../`)
+  - QuickBLE (from `../`)
 
 EXTERNAL SOURCES:
-  BLEHelper:
+  QuickBLE:
     :path: ../
 
 SPEC CHECKSUMS:
-  BLEHelper: 17759af6070a80c880efa08d9af916055b561380
+  QuickBLE: e5451df2fa5080b1fd1195196bf30ed5c155da7d
 
-PODFILE CHECKSUM: 454702954626fcbe50d1c59cd9a374965c4a212f
+PODFILE CHECKSUM: a2a21e72ecb7833f18f17340514f86a0d0df4b65
 
 COCOAPODS: 1.1.0.rc.2

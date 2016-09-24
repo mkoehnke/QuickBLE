@@ -1,5 +1,5 @@
 //
-// NSData+Int8.swift
+// QuickBLEDataExtensions.swift
 //
 // Copyright (c) 2016 Mathias Koehnke (http://www.mathiaskoehnke.de)
 //
