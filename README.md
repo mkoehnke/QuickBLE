@@ -4,7 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/QuickBLE.svg?style=flat)](http://cocoadocs.org/docsets/QuickBLE)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![SPM compatible](https://img.shields.io/badge/SPM-compatible-orange.svg?style=flat)](https://github.com/apple/swift-package-manager)
-[![License](https://img.shields.io/cocoapods/l/QuickBLE?style=flat)](http://cocoadocs.org/docsets/QuickBLE)
+[![License](https://img.shields.io/github/license/mkoehnke/QuickBLE.svg)](http://cocoadocs.org/docsets/QuickBLE)
 [![Platform](https://img.shields.io/cocoapods/p/QuickBLE.svg?style=flat)](http://cocoadocs.org/docsets/QuickBLE)
 
 
