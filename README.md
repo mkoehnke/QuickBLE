@@ -13,7 +13,8 @@ A simple wrapper for CoreBluetooth to easily connect to Bluetooth LE devices and
 
 Take a look at the iOS demo in the `Example` directory to see how to use it. It shows how to turn on/off the LED of an **[Arduino 101](https://www.arduino.cc/en/Main/ArduinoBoard101)**. 
 
-<img src="Resources/example.png" width=375 style="border:1px solid #CCCCCC"/>
+
+<img src="Resources/example.png" width=375 />
 
 
 # Usage
